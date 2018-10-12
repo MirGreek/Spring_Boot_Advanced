@@ -16,19 +16,20 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 	public void configureAuth(AuthenticationManagerBuilder auth) throws Exception{
 		auth
 		  .inMemoryAuthentication()
-		    .withUser("sfjuser") 
+		    .withUser("mir")
 		    .password("pass")
 		    .roles("USER")
 		   .and()
-             .withUser("sfjadmin")
+             .withUser("admin")
              .password("pass")
              .roles("ADMIN");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+
 		http
-			.authorizeRequests()
+				.csrf().disable().authorizeRequests()
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().authenticated()
 				.and()
